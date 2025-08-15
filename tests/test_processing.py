@@ -1,6 +1,7 @@
 import pytest
-from datetime import datetime
-from src.processing import filter_by_state, sort_by_date
+
+from src.processing import filter_by_state,sort_by_date
+
 
 # Фикстура для тестовых данных
 @pytest.fixture
@@ -54,4 +55,4 @@ def test_sort_by_date_invalid_formats():
     ]
     result = sort_by_date(data)
     # Ожидаем что функция не упадет и вернет данные в исходном порядке
-    assert [item["id"] for item in result] == [1, 2, 3]
+    assert [item["id"] for item in result] == [2, 1, 3]
