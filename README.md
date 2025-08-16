@@ -7,3 +7,13 @@
 1. Склонируйте репозиторий:
 ```bash
 git clone https://github.com/ваш-аккаунт/ваш-репозиторий.git
+```
+## Проверка по тестам
+1. Установить pytest командой
+```bash
+pip install pytest coverage
+```
+2. Скопировать и вставить в командную строку
+```bash
+pytest tests
+```
