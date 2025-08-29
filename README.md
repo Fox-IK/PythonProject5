@@ -17,3 +17,21 @@ pip install pytest coverage
 ```bash
 pytest tests
 ```
+
+## Модуль generators
+
+Модуль предоставляет инструменты для работы с большими объемами данных через генераторы.
+
+### Функции
+
+#### `filter_by_currency(transactions, currency_code)`
+Фильтрует транзакции по валюте операции.
+
+Пример:
+```bash
+from src.generators import filter_by_currency
+
+usd_transactions = filter_by_currency(transactions, "USD")
+for transaction in usd_transactions:
+    print(transaction["id"], transaction["operationAmount"]["amount"])
+```
