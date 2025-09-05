@@ -35,3 +35,9 @@ usd_transactions = filter_by_currency(transactions, "USD")
 for transaction in usd_transactions:
     print(transaction["id"], transaction["operationAmount"]["amount"])
 ```
+## Генерация отчета покрытия тестами
+
+Для генерации отчета о покрытии тестами выполните:
+
+```bash
+pytest tests/test_generators.py --cov=src.generators --cov-report=html
