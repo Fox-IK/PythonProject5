@@ -1,6 +1,7 @@
 import pytest
 from src.widget import mask_account_card, get_date
 
+
 # Фикстура для тестовых данных виджета
 @pytest.fixture(params=[
     ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79** **** 6361"),
@@ -11,6 +12,7 @@ from src.widget import mask_account_card, get_date
 def widget_data(request):
     return request.param
 
+
 # Фикстура для тестов даты
 @pytest.fixture(params=[
     ("2019-07-03T18:35:29.512364", "03.07.2019"),
@@ -18,12 +20,17 @@ def widget_data(request):
     ("2020-01-01T00:00:00.000000", "01.01.2020"),  # Граничное значение
     ("1999-12-31T23:59:59.999999", "31.12.1999"),  # Граничное значение
 ])
+
+
 def date_data(request):
+
     return request.param
+
 
 def test_mask_account_card(widget_data):
     input_str, expected = widget_data
     assert mask_account_card(input_str) == expected
+
 
 def test_get_date(date_data):
     input_date, expected = date_data
