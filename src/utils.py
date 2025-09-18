@@ -1,6 +1,6 @@
 import json
-from typing import List, Dict, Any
 from pathlib import Path
+from typing import Any, Dict, List
 
 
 def load_json_data(file_path: str) -> List[Dict[str, Any]]:
