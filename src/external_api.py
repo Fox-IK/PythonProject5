@@ -1,6 +1,7 @@
 import os
+from typing import Any, Dict, Optional
+
 import requests
-from typing import Dict, Any, Optional
 from dotenv import load_dotenv
 
 # Загружаем переменные окружения из .env файла
