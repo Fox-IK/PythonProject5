@@ -7,3 +7,68 @@
 1. Склонируйте репозиторий:
 ```bash
 git clone https://github.com/ваш-аккаунт/ваш-репозиторий.git
+```
+## Проверка по тестам
+1. Установить pytest командой
+```bash
+pip install pytest coverage
+```
+2. Скопировать и вставить в командную строку
+```bash
+pytest tests
+```
+
+## Модуль generators
+
+Модуль предоставляет инструменты для работы с большими объемами данных через генераторы.
+
+### Функции
+
+#### `filter_by_currency(transactions, currency_code)`
+Фильтрует транзакции по валюте операции.
+
+Пример:
+```bash
+from src.generators import filter_by_currency
+
+usd_transactions = filter_by_currency(transactions, "USD")
+for transaction in usd_transactions:
+    print(transaction["id"], transaction["operationAmount"]["amount"])
+```
+## Генерация отчета покрытия тестами
+
+Для генерации отчета о покрытии тестами выполните:
+
+```bash
+pytest tests/test_generators.py --cov=src.generators --cov-report=html
+```
+
+
+## Модуль decorators
+
+Модуль предоставляет декораторы для логирования работы функций.
+
+### Декоратор log
+
+Декоратор `log` автоматически логирует вызовы функций, их результаты и ошибки.
+
+#### Параметры
+- `filename` (опционально): Имя файла для записи логов. Если не указано, логи выводятся в консоль.
+
+#### Пример использования
+```python
+from src.decorators import log
+
+# Логирование в консоль
+@log()
+def add(a, b):
+    return a + b
+
+# Логирование в файл
+@log(filename="operations.log")
+def multiply(a, b):
+    return a * b
+
+# Вызов функций
+add(1, 2)  # Вывод в консоль: 2023-10-01 12:30:45 add ok
+multiply(3, 4)  # Запись в файл: 2023-10-01 12:30:45 multiply ok
