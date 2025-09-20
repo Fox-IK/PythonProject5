@@ -72,3 +72,19 @@ def multiply(a, b):
 # Вызов функций
 add(1, 2)  # Вывод в консоль: 2023-10-01 12:30:45 add ok
 multiply(3, 4)  # Запись в файл: 2023-10-01 12:30:45 multiply ok
+```
+
+## Модуль utils
+
+Модуль предоставляет утилиты для работы с данными.
+
+### Функция load_json_data
+
+Загружает данные из JSON-файла и возвращает список словарей.
+
+Пример использования:
+```python
+from src.utils import load_json_data
+
+transactions = load_json_data('data/operations.json')
+```
