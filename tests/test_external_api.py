@@ -1,6 +1,8 @@
-import pytest
 import os
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
+import pytest
+
 from src.external_api import convert_amount
 
 
