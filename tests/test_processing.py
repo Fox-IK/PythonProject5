@@ -23,8 +23,6 @@ def sample_data():
     ("UNKNOWN", []),  # Несуществующий статус
     ("", []),  # Пустой статус
 ])
-
-
 def test_filter_by_state(sample_data, state, expected_ids):
     result = filter_by_state(sample_data, state)
     assert [item["id"] for item in result] == expected_ids
@@ -35,8 +33,6 @@ def test_filter_by_state(sample_data, state, expected_ids):
     (True, [5, 3, 1, 2, 4]),  # По убыванию (новые сначала)
     (False, [4, 2, 1, 3, 5]),  # По возрастанию (старые сначала)
 ])
-
-
 def test_sort_by_date(sample_data, reverse, expected_ids):
     result = sort_by_date(sample_data, reverse)
     assert [item["id"] for item in result] == expected_ids

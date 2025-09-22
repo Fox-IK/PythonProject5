@@ -1,8 +1,7 @@
-import pytest
 import json
-import tempfile
 import os
-from pathlib import Path
+import tempfile
+
 from src.utils import load_json_data
 
 
