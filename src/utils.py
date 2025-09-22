@@ -1,8 +1,7 @@
 import json
 import logging
-import os
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 # Создаем папку для логов, если она не существует
 log_dir = Path("logs")
@@ -68,4 +67,3 @@ def load_json_data(file_path: str) -> List[Dict[str, Any]]:
     except Exception as e:
         utils_logger.error("Неожиданная ошибка: %s", str(e))
         return []
-
