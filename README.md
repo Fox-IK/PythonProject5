@@ -89,3 +89,17 @@ from src.utils import load_json_data
 transactions = load_json_data('data/operations.json')
 ```
 
+## Модуль file_reader
+
+Модуль предоставляет функции для чтения финансовых операций из CSV и Excel файлов.
+
+### Функции
+
+#### `read_csv_file(file_path)`
+Читает транзакции из CSV-файла.
+
+```python
+from src.file_reader import read_csv_file
+
+transactions = read_csv_file('data/transactions.csv')
+```
