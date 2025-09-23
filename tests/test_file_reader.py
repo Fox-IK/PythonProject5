@@ -1,8 +1,6 @@
 from unittest.mock import MagicMock, patch
-
 import pandas as pd
 import pytest
-
 from src.file_reader import convert_transaction_format, read_csv_file, read_excel_file
 
 
