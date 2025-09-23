@@ -1,6 +1,7 @@
 import pytest
 import pandas as pd
 from unittest.mock import patch, mock_open, MagicMock
+from pathlib import Path
 from src.file_reader import read_csv_file, read_excel_file, convert_transaction_format
 
 
@@ -28,7 +29,16 @@ class TestFileReader:
 
     def test_read_csv_file_success(self, sample_csv_data):
         """Тестируем успешное чтение CSV файла."""
-        with patch('pandas.read_csv') as mock_read_csv:
+        with patch('pathlib.Path.exists') as mock_exists, \
+                patch('pathlib.Path.is_file') as mock_is_file, \
+                patch('pathlib.Path.stat') as mock_stat, \
+                patch('pandas.read_csv') as mock_read_csv:
+            # Мокаем проверки файла
+            mock_exists.return_value = True
+            mock_is_file.return_value = True
+            mock_stat.return_value.st_size = 100  # Файл не пустой
+
+            # Мокаем чтение CSV
             mock_df = MagicMock()
             mock_df.to_dict.return_value = [
                 {'id': 1, 'state': 'EXECUTED', 'amount': 100.0, 'currency': 'USD'}
@@ -43,28 +53,49 @@ class TestFileReader:
 
     def test_read_csv_file_not_found(self):
         """Тестируем обработку отсутствующего CSV файла."""
-        with patch('pathlib.Path.exists', return_value=False):
+        with patch('pathlib.Path.exists') as mock_exists:
+            mock_exists.return_value = False
             result = read_csv_file('nonexistent.csv')
             assert result == []
 
     def test_read_csv_file_empty(self):
         """Тестируем обработку пустого CSV файла."""
-        with patch('pathlib.Path.exists', return_value=True), \
-                patch('pathlib.Path.is_file', return_value=True), \
+        with patch('pathlib.Path.exists') as mock_exists, \
+                patch('pathlib.Path.is_file') as mock_is_file, \
                 patch('pathlib.Path.stat') as mock_stat:
-            mock_stat.return_value.st_size = 0
+            mock_exists.return_value = True
+            mock_is_file.return_value = True
+            mock_stat.return_value.st_size = 0  # Пустой файл
+
             result = read_csv_file('empty.csv')
             assert result == []
 
     def test_read_csv_file_exception(self):
         """Тестируем обработку исключения при чтении CSV."""
-        with patch('pandas.read_csv', side_effect=Exception("Read error")):
+        with patch('pathlib.Path.exists') as mock_exists, \
+                patch('pathlib.Path.is_file') as mock_is_file, \
+                patch('pathlib.Path.stat') as mock_stat, \
+                patch('pandas.read_csv') as mock_read_csv:
+            mock_exists.return_value = True
+            mock_is_file.return_value = True
+            mock_stat.return_value.st_size = 100
+            mock_read_csv.side_effect = Exception("Read error")
+
             result = read_csv_file('error.csv')
             assert result == []
 
     def test_read_excel_file_success(self, sample_excel_data):
         """Тестируем успешное чтение Excel файла."""
-        with patch('pandas.read_excel') as mock_read_excel:
+        with patch('pathlib.Path.exists') as mock_exists, \
+                patch('pathlib.Path.is_file') as mock_is_file, \
+                patch('pathlib.Path.stat') as mock_stat, \
+                patch('pandas.read_excel') as mock_read_excel:
+            # Мокаем проверки файла
+            mock_exists.return_value = True
+            mock_is_file.return_value = True
+            mock_stat.return_value.st_size = 100  # Файл не пустой
+
+            # Мокаем чтение Excel
             mock_read_excel.return_value = sample_excel_data
 
             result = read_excel_file('test.xlsx')
@@ -76,7 +107,8 @@ class TestFileReader:
 
     def test_read_excel_file_not_found(self):
         """Тестируем обработку отсутствующего Excel файла."""
-        with patch('pathlib.Path.exists', return_value=False):
+        with patch('pathlib.Path.exists') as mock_exists:
+            mock_exists.return_value = False
             result = read_excel_file('nonexistent.xlsx')
             assert result == []
 
@@ -123,19 +155,35 @@ class TestFileReader:
     ])
     def test_file_paths(self, file_path, expected):
         """Параметризованный тест для различных путей файлов."""
-        with patch('pandas.read_csv') as mock_read_csv, \
+        with patch('pathlib.Path.exists') as mock_exists, \
+                patch('pathlib.Path.is_file') as mock_is_file, \
+                patch('pathlib.Path.stat') as mock_stat, \
+                patch('pandas.read_csv') as mock_read_csv, \
                 patch('pandas.read_excel') as mock_read_excel:
+
+            mock_exists.return_value = expected
+            mock_is_file.return_value = expected
+            mock_stat.return_value.st_size = 100 if expected else 0
+
             mock_df = MagicMock()
             mock_df.to_dict.return_value = []
 
             if file_path and file_path.endswith('.csv'):
                 mock_read_csv.return_value = mock_df
                 result = read_csv_file(file_path)
-                assert result == []
+                if expected:
+                    assert result == []
+                    mock_read_csv.assert_called_once_with(file_path)
+                else:
+                    assert result == []
             elif file_path and file_path.endswith('.xlsx'):
                 mock_read_excel.return_value = mock_df
                 result = read_excel_file(file_path)
-                assert result == []
+                if expected:
+                    assert result == []
+                    mock_read_excel.assert_called_once_with(file_path)
+                else:
+                    assert result == []
             else:
                 # Для некорректных путей
                 result = read_csv_file(file_path)
