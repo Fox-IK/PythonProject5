@@ -1,6 +1,6 @@
 from masks import get_mask_account, get_mask_card_number
-from widget import get_date, mask_account_card
 from src.file_reader import read_csv_file, read_excel_file
+from widget import get_date, mask_account_card
 
 print(get_mask_card_number("7000792289606361"))  # 7000 79** **** 6361
 

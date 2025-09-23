@@ -1,7 +1,8 @@
-import pandas as pd
-from typing import List, Dict, Any
-from pathlib import Path
 import logging
+from pathlib import Path
+from typing import Any, Dict, List
+
+import pandas as pd
 
 # Настройка логгера для модуля
 logger = logging.getLogger("file_reader")
