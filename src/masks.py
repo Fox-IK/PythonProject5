@@ -34,7 +34,7 @@ def get_mask_card_number(card_number: str) -> str:
         cleaned = card_number.replace(" ", "")
         if len(cleaned) != 16 or not cleaned.isdigit():
             error_msg = f"Invalid card number format: {card_number}"
-            # ✅ Логирование ошибочных случаев с уровнем не ниже ERROR
+            # Логирование ошибочных случаев с уровнем не ниже ERROR
             masks_logger.error(error_msg)
             raise ValueError(error_msg)
 

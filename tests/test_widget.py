@@ -34,3 +34,31 @@ def test_mask_account_card(widget_data):
 def test_get_date(date_data):
     input_date, expected = date_data
     assert get_date(input_date) == expected
+
+
+def test_mask_account_card_edge_cases():
+    """Тестируем крайние случаи маскирования карт/счетов."""
+    # Пустая строка
+    assert mask_account_card("") == "Некорректные данные"
+
+    # Только тип без номера
+    assert mask_account_card("Счет") == "Некорректные данные"
+    assert mask_account_card("Visa") == "Некорректные данные"
+
+    # Неизвестный формат
+    assert mask_account_card("Неизвестный 1234567890123456") == "Некорректные данные"
+
+
+def test_get_date_edge_cases():
+    """Тестируем крайние случаи форматирования даты."""
+    # Неполная дата
+    assert get_date("2023-01") == "Некорректная дата"
+
+    # Неправильный разделитель
+    assert get_date("2023/01/01") == "Некорректная дата"
+
+    # Пустая строка
+    assert get_date("") == "Некорректная дата"
+
+    # None
+    assert get_date(None) == "Некорректная дата"
