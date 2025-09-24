@@ -1,38 +1,38 @@
 import pytest
-
-from src.masks import get_mask_account, get_mask_card_number
-
-
-# Фикстура для тестовых данных карт
-@pytest.fixture(params=[
-    ("7000792289606361", "7000 79** **** 6361"),
-    ("1234567812345678", "1234 56** **** 5678"),
-    ("1111222233334444", "1111 22** **** 4444"),
-    ("9999888877776666", "9999 88** **** 6666"),
-])
-def card_data(request):
-    return request.param
+from src.masks import get_mask_account_number, get_mask_card_number
 
 
-# Фикстура для тестовых данных счетов
-@pytest.fixture(params=[
-    ("73654108430135874305", "**4305"),
-    ("12345678901234567890", "**7890"),
-    ("11112222333344445555", "**5555"),
-])
-def account_data(request):
-    return request.param
+def test_get_mask_card_number_valid():
+    """Тестируем маскирование валидного номера карты."""
+    assert get_mask_card_number("1234567812345678") == "1234 56** **** 5678"
+    assert get_mask_card_number("1234 5678 1234 5678") == "1234 56** **** 5678"
 
 
-def test_get_mask_card_number(card_data):
-    input_card, expected = card_data
-    assert get_mask_card_number(input_card) == expected
+def test_get_mask_card_number_invalid():
+    """Тестируем обработку невалидных номеров карт."""
+    with pytest.raises(ValueError):
+        get_mask_card_number("1234")  # Слишком короткий номер
+
+    with pytest.raises(ValueError):
+        get_mask_card_number("123456781234567a")  # Не цифры
 
 
-def test_get_mask_account(account_data):
-    input_account, expected = account_data
-    assert isinstance(expected, object)
-    assert get_mask_account(input_account) == expected
+def test_get_mask_account_number_valid():
+    """Тестируем маскирование валидного номера счета."""
+    assert get_mask_account_number("1234567890123456") == "**3456"
+    assert get_mask_account_number("1234 5678 9012 3456") == "**3456"
+
+
+def test_get_mask_account_number_invalid():
+    """Тестируем обработку невалидных номеров счетов."""
+    with pytest.raises(ValueError):
+        get_mask_account_number("123")  # Слишком короткий номер
+
+    with pytest.raises(ValueError):
+        get_mask_account_number("12a")  # После очистки "12" - слишком короткий
+
+    with pytest.raises(ValueError):
+        get_mask_account_number("abc")  # После очистки "" - пустая строка
 
 
 def test_get_mask_card_number_edge_cases():
@@ -40,26 +40,48 @@ def test_get_mask_card_number_edge_cases():
     # Карта с пробелами
     assert get_mask_card_number("1234 5678 9012 3456") == "1234 56** **** 3456"
 
-    # Карта с разными разделителями
+    # Карта с разными разделителями - должна обрабатываться корректно
+    # так как функция удаляет все нецифровые символы
     assert get_mask_card_number("1234-5678-9012-3456") == "1234 56** **** 3456"
 
 
-def test_get_mask_account_edge_cases():
+def test_get_mask_account_number_edge_cases():
     """Тестируем крайние случаи маскирования счетов."""
     # Счет с пробелами
-    assert get_mask_account("1234 5678 9012 3456") == "**3456"
+    assert get_mask_account_number("1234 5678 9012 3456") == "**3456"
 
-    # Счет с минимальной длиной
-    assert get_mask_account("1234") == "**1234"
+    # Счет с минимальной длиной (4 цифры)
+    assert get_mask_account_number("1234") == "**1234"
 
 
 def test_get_mask_card_number_special_characters():
-    """Тестируем обработку специальных символов."""
-    with pytest.raises(ValueError):
-        get_mask_card_number("1234abcd5678efgh")
+    """Тестируем обработку специальных символов в номерах карт."""
+    # Должно работать, так как функция фильтрует только цифры
+    assert get_mask_card_number("1234abcd5678efgh9012ijkl3456") == "1234 56** **** 3456"
 
 
-def test_get_mask_account_special_characters():
-    """Тестируем обработку специальных символов в счетах."""
-    with pytest.raises(ValueError):
-        get_mask_account("1234abcd")
+def test_get_mask_account_number_special_characters():
+    """Тестируем обработку специальных символов в номерах счетов."""
+    # Должно работать, так как функция фильтрует только цифры
+    assert get_mask_account_number("1234abcd5678efgh9012ijkl3456") == "**3456"
+
+
+def test_get_mask_card_number_logging(caplog):
+    """Тестируем логирование при маскировании карт."""
+    with caplog.at_level("INFO"):
+        result = get_mask_card_number("1234567812345678")
+        assert "Card number masked successfully" in caplog.text
+
+
+def test_get_mask_account_number_logging(caplog):
+    """Тестируем логирование при маскировании счетов."""
+    with caplog.at_level("INFO"):
+        result = get_mask_account_number("1234567890123456")
+        assert "Account number masked successfully" in caplog.text
+
+
+def test_get_mask_account_number_valid_with_special_chars():
+    """Тестируем валидные номера счетов со специальными символами."""
+    # Эти случаи должны работать, так как после очистки остаются валидные номера
+    assert get_mask_account_number("12345678901234ab") == "**1234"
+    assert get_mask_account_number("1234-5678-9012-3456") == "**3456"

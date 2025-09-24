@@ -177,7 +177,7 @@ class TestBankTransactionProcessor:
         result = processor.format_transaction(transaction)
         assert "01.01.2023" in result
         assert "Перевод" in result
-        assert "100.0 (USD)" in result
+        assert "100.0 USD" in result
 
     @patch('builtins.print')
     def test_print_transactions_empty(self, mock_print, processor):

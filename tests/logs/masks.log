@@ -1,2 +1,40 @@
-2025-09-24 19:47:47,438 - masks - ERROR - Invalid account number format: 1234abcd
-2025-09-24 19:47:47,439 - masks - ERROR - Error masking account number 1234abcd: Invalid account number format: 1234abcd
+2025-09-24 21:59:05,855 - masks - INFO - Account number masked successfully: 1234567890123456 -> **3456
+2025-09-24 21:59:05,855 - masks - INFO - Account number masked successfully: 9876543210987654 -> **7654
+2025-09-24 21:59:05,859 - masks - INFO - Account number masked successfully: 1234567890123456 -> **3456
+2025-09-24 21:59:05,859 - masks - INFO - Account number masked successfully: 9876543210987654 -> **7654
+2025-09-24 21:59:05,859 - masks - ERROR - Invalid card number format: 3456
+2025-09-24 21:59:05,859 - masks - ERROR - Error masking card number 3456: Invalid card number format: 3456
+2025-09-24 21:59:05,859 - masks - ERROR - Invalid card number format: ABC
+2025-09-24 21:59:05,859 - masks - ERROR - Error masking card number ABC: Invalid card number format: ABC
+2025-09-24 21:59:05,864 - masks - INFO - Account number masked successfully: 1234 -> **1234
+2025-09-24 21:59:05,864 - masks - INFO - Account number masked successfully: 5678 -> **5678
+2025-09-24 21:59:05,866 - masks - INFO - Card number masked successfully: 1234567812345678 -> 1234 56** **** 5678
+2025-09-24 21:59:05,866 - masks - INFO - Card number masked successfully: 1234 5678 1234 5678 -> 1234 56** **** 5678
+2025-09-24 21:59:05,867 - masks - ERROR - Invalid card number format: 1234
+2025-09-24 21:59:05,867 - masks - ERROR - Error masking card number 1234: Invalid card number format: 1234
+2025-09-24 21:59:05,867 - masks - ERROR - Invalid card number format: 123456781234567a
+2025-09-24 21:59:05,867 - masks - ERROR - Error masking card number 123456781234567a: Invalid card number format: 123456781234567a
+2025-09-24 21:59:05,868 - masks - INFO - Account number masked successfully: 1234567890123456 -> **3456
+2025-09-24 21:59:05,868 - masks - INFO - Account number masked successfully: 1234 5678 9012 3456 -> **3456
+2025-09-24 21:59:05,869 - masks - ERROR - Invalid account number format: 123
+2025-09-24 21:59:05,869 - masks - ERROR - Error masking account number 123: Invalid account number format: 123
+2025-09-24 21:59:05,869 - masks - ERROR - Invalid account number format: 12a
+2025-09-24 21:59:05,869 - masks - ERROR - Error masking account number 12a: Invalid account number format: 12a
+2025-09-24 21:59:05,869 - masks - ERROR - Invalid account number format: abc
+2025-09-24 21:59:05,869 - masks - ERROR - Error masking account number abc: Invalid account number format: abc
+2025-09-24 21:59:05,870 - masks - INFO - Card number masked successfully: 1234 5678 9012 3456 -> 1234 56** **** 3456
+2025-09-24 21:59:05,870 - masks - INFO - Card number masked successfully: 1234-5678-9012-3456 -> 1234 56** **** 3456
+2025-09-24 21:59:05,871 - masks - INFO - Account number masked successfully: 1234 5678 9012 3456 -> **3456
+2025-09-24 21:59:05,871 - masks - INFO - Account number masked successfully: 1234 -> **1234
+2025-09-24 21:59:05,872 - masks - INFO - Card number masked successfully: 1234abcd5678efgh9012ijkl3456 -> 1234 56** **** 3456
+2025-09-24 21:59:05,873 - masks - INFO - Account number masked successfully: 1234abcd5678efgh9012ijkl3456 -> **3456
+2025-09-24 21:59:05,874 - masks - INFO - Card number masked successfully: 1234567812345678 -> 1234 56** **** 5678
+2025-09-24 21:59:05,875 - masks - INFO - Account number masked successfully: 1234567890123456 -> **3456
+2025-09-24 21:59:05,876 - masks - INFO - Account number masked successfully: 12345678901234ab -> **1234
+2025-09-24 21:59:05,876 - masks - INFO - Account number masked successfully: 1234-5678-9012-3456 -> **3456
+2025-09-24 21:59:05,927 - masks - INFO - Card number masked successfully: 7000792289606361 -> 7000 79** **** 6361
+2025-09-24 21:59:05,929 - masks - INFO - Account number masked successfully: 73654108430135874305 -> **4305
+2025-09-24 21:59:05,930 - masks - INFO - Card number masked successfully: 1234567812345678 -> 1234 56** **** 5678
+2025-09-24 21:59:05,931 - masks - INFO - Card number masked successfully: 1111222233334444 -> 1111 22** **** 4444
+2025-09-24 21:59:05,936 - masks - ERROR - Invalid account number format: 123
+2025-09-24 21:59:05,936 - masks - ERROR - Error masking account number 123: Invalid account number format: 123
