@@ -1,6 +1,0 @@
-2025-09-23 19:23:23,157 - file_reader - ERROR - CSV файл не найден: nonexistent.csv
-2025-09-23 19:23:23,159 - file_reader - ERROR - CSV файл пустой: empty.csv
-2025-09-23 19:23:23,160 - file_reader - ERROR - Ошибка при чтении CSV файла error.csv: Read error
-2025-09-23 19:23:23,165 - file_reader - ERROR - Excel файл не найден: nonexistent.xlsx
-2025-09-23 19:23:23,174 - file_reader - ERROR - CSV файл не найден: 
-2025-09-23 19:23:23,176 - file_reader - ERROR - Ошибка при чтении CSV файла None: argument should be a str or an os.PathLike object where __fspath__ returns a str, not 'NoneType'
