@@ -1,4 +1,5 @@
 import pytest
+
 from src.masks import get_mask_account_number, get_mask_card_number
 
 
@@ -69,14 +70,16 @@ def test_get_mask_account_number_special_characters():
 def test_get_mask_card_number_logging(caplog):
     """Тестируем логирование при маскировании карт."""
     with caplog.at_level("INFO"):
-        result = get_mask_card_number("1234567812345678")
+        # Убрали присваивание неиспользуемой переменной
+        get_mask_card_number("1234567812345678")
         assert "Card number masked successfully" in caplog.text
 
 
 def test_get_mask_account_number_logging(caplog):
     """Тестируем логирование при маскировании счетов."""
     with caplog.at_level("INFO"):
-        result = get_mask_account_number("1234567890123456")
+        # Убрали присваивание неиспользуемой переменной
+        get_mask_account_number("1234567890123456")
         assert "Account number masked successfully" in caplog.text
 
 

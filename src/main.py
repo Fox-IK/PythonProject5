@@ -1,14 +1,14 @@
 import os
 import sys
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
+from src.file_reader import convert_transaction_format, read_csv_file, read_excel_file
+from src.processing import filter_by_currency_code, filter_by_state, process_bank_search, sort_by_date
+from src.utils import load_json_data
+from src.widget import get_date, mask_account_card
 
 # Добавляем путь к src для импорта модулей
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-
-from src.file_reader import read_csv_file, read_excel_file, convert_transaction_format
-from src.processing import filter_by_state, sort_by_date, process_bank_search, filter_by_currency_code
-from src.utils import load_json_data
-from src.widget import get_date, mask_account_card
 
 
 class BankTransactionProcessor:

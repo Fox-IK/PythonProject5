@@ -1,6 +1,8 @@
 from unittest.mock import MagicMock, patch
+
 import pandas as pd
 import pytest
+
 from src.file_reader import convert_transaction_format, read_csv_file, read_excel_file
 
 
@@ -233,40 +235,9 @@ def test_convert_transaction_format_nested_operation_amount():
 
 def test_file_reader_logging(caplog):
     """Тестируем логирование в file_reader."""
-    with patch('pathlib.Path.exists') as mock_exists, \
-            patch('pathlib.Path.is_file') as mock_is_file, \
-            patch('pathlib.Path.stat') as mock_stat, \
-            patch('pandas.read_csv') as mock_read_csv:
+    with patch('pathlib.Path.exists') as mock_exists:
         mock_exists.return_value = False
 
         with caplog.at_level("ERROR"):
-            result = read_csv_file("nonexistent.csv")
+            read_csv_file("nonexistent.csv")
             assert "CSV файл не найден: nonexistent.csv" in caplog.text
-
-
-def convert_transaction_format(transactions: list[dict]) -> list[dict]:
-    """Конвертирует транзакции в единый формат."""
-    converted = []
-    for transaction in transactions:
-        # Создаем копию транзакции
-        new_transaction = transaction.copy()
-
-        # Обработка альтернативных названий полей
-        if "transaction_id" in new_transaction and "id" not in new_transaction:
-            new_transaction["id"] = new_transaction["transaction_id"]
-
-        if "status" in new_transaction and "state" not in new_transaction:
-            new_transaction["state"] = new_transaction["status"]
-
-        if "transaction_date" in new_transaction and "date" not in new_transaction:
-            new_transaction["date"] = new_transaction["transaction_date"]
-
-        # Обработка вложенного operationAmount
-        if "operationAmount" in new_transaction and isinstance(new_transaction["operationAmount"], dict):
-            op_amount = new_transaction["operationAmount"]
-            if "value" in op_amount and "amount" not in op_amount:
-                new_transaction["operationAmount"]["amount"] = op_amount["value"]
-
-        converted.append(new_transaction)
-
-    return converted

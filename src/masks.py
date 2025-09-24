@@ -69,5 +69,7 @@ def get_mask_account_number(account_number: str) -> str:
         error_msg = f"Error masking account number {account_number}: {e}"
         masks_logger.error(error_msg)
         raise
+
+
 # Алиас для обратной совместимости с тестами
 get_mask_account = get_mask_account_number

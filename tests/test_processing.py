@@ -1,6 +1,13 @@
 import pytest
-from src.processing import filter_by_state, sort_by_date
-from src.processing import process_bank_search, process_bank_operations, filter_by_currency_code
+
+from src.processing import (
+    filter_by_currency_code,
+    filter_by_state,
+    process_bank_operations,
+    process_bank_search,
+    sort_by_date,
+)
+
 
 # Фикстура для тестовых данных
 @pytest.fixture

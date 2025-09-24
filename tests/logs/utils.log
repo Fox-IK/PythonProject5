@@ -1,8 +1,8 @@
-2025-09-24 21:59:05,899 - utils - INFO - Успешно загружено 1 записей из файла: C:\Users\ilya-\AppData\Local\Temp\tmp8uh09zjb.json
-2025-09-24 21:59:05,901 - utils - ERROR - Файл пустой: C:\Users\ilya-\AppData\Local\Temp\tmpo584n1is.json
-2025-09-24 21:59:05,903 - utils - ERROR - Ошибка декодирования JSON: Expecting value: line 1 column 1 (char 0)
-2025-09-24 21:59:05,906 - utils - ERROR - Данные в файле не являются списком: C:\Users\ilya-\AppData\Local\Temp\tmptgj5xd80.json
-2025-09-24 21:59:05,907 - utils - ERROR - Файл не найден: nonexistent_file.json
-2025-09-24 21:59:05,908 - utils - ERROR - Файл не найден: test.json
-2025-09-24 21:59:05,909 - utils - ERROR - Файл не найден: test.json
-2025-09-24 21:59:05,925 - utils - INFO - Успешно загружено 1000 записей из файла: C:\Users\ilya-\AppData\Local\Temp\tmpguofdda2.json
+2025-09-24 22:36:31,005 - utils - INFO - Успешно загружено 1 записей из файла: C:\Users\ilya-\AppData\Local\Temp\tmpsu578ri9.json
+2025-09-24 22:36:31,012 - utils - ERROR - Файл пустой: C:\Users\ilya-\AppData\Local\Temp\tmp2cw3526j.json
+2025-09-24 22:36:31,022 - utils - ERROR - Ошибка декодирования JSON: Expecting value: line 1 column 1 (char 0)
+2025-09-24 22:36:31,031 - utils - ERROR - Данные в файле не являются списком: C:\Users\ilya-\AppData\Local\Temp\tmpc1eju2qj.json
+2025-09-24 22:36:31,038 - utils - ERROR - Файл не найден: nonexistent_file.json
+2025-09-24 22:36:31,046 - utils - ERROR - Файл не найден: test.json
+2025-09-24 22:36:31,053 - utils - ERROR - Файл не найден: test.json
+2025-09-24 22:36:31,093 - utils - INFO - Успешно загружено 1000 записей из файла: C:\Users\ilya-\AppData\Local\Temp\tmpx5pqezs1.json

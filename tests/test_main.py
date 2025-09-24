@@ -1,13 +1,13 @@
-import pytest
-from unittest.mock import patch, MagicMock, call
-import sys
 import os
-from io import StringIO
+import sys
+from unittest.mock import patch
+
+import pytest
+
+from src.main import BankTransactionProcessor, main
 
 # Добавляем путь к src для импорта
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-
-from src.main import BankTransactionProcessor, main
 
 
 class TestBankTransactionProcessor:

@@ -1,6 +1,7 @@
 import logging
 from datetime import datetime
-from src.masks import get_mask_card_number, get_mask_account_number
+
+from src.masks import get_mask_account_number, get_mask_card_number
 
 # Настройка логгера для модуля widget
 logger = logging.getLogger(__name__)
