@@ -1,1 +1,10 @@
-2025-09-20 17:20:13,088 - masks - ERROR - Некорректный номер карты: 123
+2025-09-25 20:15:08,544 - masks - INFO - Account number masked successfully: 1234567890123456 -> **3456
+2025-09-25 20:15:08,545 - masks - INFO - Account number masked successfully: 9876543210987654 -> **7654
+2025-09-25 20:15:08,567 - masks - INFO - Account number masked successfully: 1234567890123456 -> **3456
+2025-09-25 20:15:08,567 - masks - INFO - Account number masked successfully: 9876543210987654 -> **7654
+2025-09-25 20:15:08,568 - masks - ERROR - Invalid card number format: 3456
+2025-09-25 20:15:08,568 - masks - ERROR - Error masking card number 3456: Invalid card number format: 3456
+2025-09-25 20:15:08,569 - masks - ERROR - Invalid card number format: ABC
+2025-09-25 20:15:08,569 - masks - ERROR - Error masking card number ABC: Invalid card number format: ABC
+2025-09-25 20:15:08,596 - masks - INFO - Account number masked successfully: 1234 -> **1234
+2025-09-25 20:15:08,596 - masks - INFO - Account number masked successfully: 5678 -> **5678

@@ -31,38 +31,45 @@ masks_logger.addHandler(file_handler)
 def get_mask_card_number(card_number: str) -> str:
     """Маскирует номер карты в формате XXXX XX** **** XXXX"""
     try:
-        cleaned = card_number.replace(" ", "")
+        # Удаляем все нецифровые символы для поддержки разных форматов
+        cleaned = ''.join(filter(str.isdigit, card_number))
+
         if len(cleaned) != 16 or not cleaned.isdigit():
             error_msg = f"Invalid card number format: {card_number}"
-            # ✅ Логирование ошибочных случаев с уровнем не ниже ERROR
             masks_logger.error(error_msg)
             raise ValueError(error_msg)
 
-        masked_number = f"{cleaned[:4]} {cleaned[4:6]}** **** {cleaned[-4:]}"
-        # Логирование включено в успешные случаи использования функций
-        masks_logger.info("Card number masked successfully: %s -> %s", card_number, masked_number)
-        return masked_number
+        # Форматирование номера
+        masked = f"{cleaned[:4]} {cleaned[4:6]}** **** {cleaned[-4:]}"
+        masks_logger.info(f"Card number masked successfully: {card_number} -> {masked}")
+        return masked
 
     except Exception as e:
-        masks_logger.error("Error masking card number %s: %s", card_number, str(e))
+        error_msg = f"Error masking card number {card_number}: {e}"
+        masks_logger.error(error_msg)
         raise
 
 
-def get_mask_account(account_number: str) -> str:
+def get_mask_account_number(account_number: str) -> str:
     """Маскирует номер счета в формате **XXXX"""
     try:
-        cleaned = account_number.replace(" ", "")
+        # Удаляем все нецифровые символы
+        cleaned = ''.join(filter(str.isdigit, account_number))
+
         if len(cleaned) < 4 or not cleaned.isdigit():
             error_msg = f"Invalid account number format: {account_number}"
-            #  Логирование ошибочных случаев с уровнем не ниже ERROR
             masks_logger.error(error_msg)
             raise ValueError(error_msg)
 
-        masked_number = f"**{cleaned[-4:]}"
-        #  Логирование включено в успешные случаи использования функций
-        masks_logger.info("Account number masked successfully: %s -> %s", account_number, masked_number)
-        return masked_number
+        masked = f"**{cleaned[-4:]}"
+        masks_logger.info(f"Account number masked successfully: {account_number} -> {masked}")
+        return masked
 
     except Exception as e:
-        masks_logger.error("Error masking account number %s: %s", account_number, str(e))
+        error_msg = f"Error masking account number {account_number}: {e}"
+        masks_logger.error(error_msg)
         raise
+
+
+# Алиас для обратной совместимости с тестами
+get_mask_account = get_mask_account_number

@@ -88,36 +88,46 @@ def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
         return []
 
 
-def convert_transaction_format(transactions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Конвертирует транзакции в единый формат (опционально).
-
-    :param transactions: Список транзакций в исходном формате
-    :return: Список транзакций в стандартном формате
-    """
+def convert_transaction_format(transactions: list[dict]) -> list[dict]:
+    """Конвертирует транзакции в единый формат."""
     converted = []
-
     for transaction in transactions:
-        try:
-            # Преобразование в стандартный формат
-            converted_transaction = {
-                "id": transaction.get("id"),
-                "state": transaction.get("state", "UNKNOWN"),
-                "date": transaction.get("date", ""),
-                "operationAmount": {
-                    "amount": str(transaction.get("amount", transaction.get("operationAmount", ""))),
-                    "currency": {
-                        "name": transaction.get("currency", transaction.get("currency_name", "")),
-                        "code": transaction.get("currency_code", transaction.get("currency", ""))
-                    }
-                },
-                "description": transaction.get("description", ""),
-                "from": transaction.get("from", ""),
-                "to": transaction.get("to", "")
+        # Создаем копию транзакции
+        new_transaction = transaction.copy()
+
+        # Обработка альтернативных названий полей
+        if "transaction_id" in new_transaction:
+            new_transaction["id"] = new_transaction["transaction_id"]
+
+        if "status" in new_transaction:
+            new_transaction["state"] = new_transaction["status"]
+
+        if "transaction_date" in new_transaction:
+            new_transaction["date"] = new_transaction["transaction_date"]
+
+        # Обработка вложенного operationAmount
+        if "operationAmount" in new_transaction and isinstance(new_transaction["operationAmount"], dict):
+            op_amount = new_transaction["operationAmount"]
+            if "value" in op_amount:
+                # Создаем копию operationAmount с правильной структурой
+                new_op_amount = op_amount.copy()
+                new_op_amount["amount"] = op_amount["value"]
+                # Сохраняем валюту, если она есть
+                if "currency" in op_amount:
+                    new_op_amount["currency"] = op_amount["currency"]
+                new_transaction["operationAmount"] = new_op_amount
+
+        # Обработка простых полей amount и currency
+        elif "amount" in new_transaction:
+            # Создаем структуру operationAmount из простых полей
+            new_transaction["operationAmount"] = {
+                "amount": str(new_transaction["amount"]),
+                "currency": {
+                    "code": new_transaction.get("currency", ""),
+                    "name": new_transaction.get("currency_name", "")
+                }
             }
-            converted.append(converted_transaction)
-        except Exception as e:
-            logger.warning(f"Ошибка при конвертации транзакции: {e}")
-            continue
+
+        converted.append(new_transaction)
 
     return converted
