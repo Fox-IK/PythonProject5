@@ -253,3 +253,33 @@ class TestIntegration:
             # Проверяем, что транзакции были загружены и обработаны
             assert len(processor.transactions) == 1
             assert len(processor.filtered_transactions) == 1
+
+
+def show_transaction_statistics(self):
+    """Показывает статистику по транзакциям."""
+    if not self.filtered_transactions:
+        print("Нет данных для статистики")
+        return
+
+    # Статистика по типам операций
+    type_stats = count_transactions_by_type(self.filtered_transactions, "description")
+    print("\nСтатистика по типам операций:")
+    for operation_type, count in type_stats.items():
+        print(f"  {operation_type}: {count}")
+
+    # Статистика по статусам
+    status_stats = count_transactions_by_status(self.filtered_transactions)
+    print("\nСтатистика по статусам:")
+    for status, count in status_stats.items():
+        print(f"  {status}: {count}")
+
+    # Статистика по валютам
+    currency_stats = count_transactions_by_currency(self.filtered_transactions)
+    print("\nСтатистика по валютам:")
+    for currency, count in currency_stats.items():
+        print(f"  {currency}: {count}")
+
+    # Самая частая операция
+    if type_stats:
+        most_common = max(type_stats.items(), key=lambda x: x[1])
+        print(f"\nСамая частая операция: {most_common[0]} ({most_common[1]} раз)")
